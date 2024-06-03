@@ -2,8 +2,8 @@
 #include "arena.h"
 #include <stdio.h>
 
-#define WIDTH  1280
-#define HEIGHT  720
+#define WINDOW_WIDTH  1280
+#define WINDOW_HEIGHT  720
 #define TITLE  "WINDOW"
 #define ENT_COUNT 10
 bool GAME_RUNNING = false;
@@ -12,8 +12,8 @@ bool GAME_RUNNING = false;
 int main() {
 
     /* == RAYLIB INIT ============================================================*/ 
-    InitWindow(WIDTH, HEIGHT, TITLE);
     SetConfigFlags(FLAG_VSYNC_HINT);
+    InitWindow(WINDOW_WIDTH, WINDOW_HEIGHT, TITLE);
     SetTargetFPS(60);
     SetExitKey(KEY_Q);
     SetExitKey(KEY_SPACE);
