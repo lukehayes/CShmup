@@ -1,40 +1,12 @@
 #include "raylib.h"
-#include <stdlib.h>
+#include "arena.h"
 #include <stdio.h>
-#include <stddef.h>
 
 #define WIDTH  1280
 #define HEIGHT  720
 #define TITLE  "WINDOW"
 #define ENT_COUNT 10
 bool GAME_RUNNING = false;
-
-
-typedef struct Arena {
-    size_t size;
-    size_t capacity;
-    size_t position;
-    void* data;
-} Arena;
-
-Arena* arena_init(size_t capacity)
-{
-    Arena* arena    = malloc(sizeof(Arena));
-    arena->size     = 0;
-    arena->capacity = capacity;
-    arena->position = 0;
-    arena->data     = malloc(sizeof(size_t) * capacity);
-
-    return arena;
-}
-
-void arena_destroy(Arena* arena)
-{
-    free(arena->data);
-    free(arena);
-}
-
-
 
 
 int main() {
@@ -47,10 +19,9 @@ int main() {
 
     Arena* a = arena_init(100);
 
-    printf("Arena Capacity: %lu \n", a->capacity);
+    *(a->data + 10) = (int*)200;
 
-    arena_destroy(a);
-
+    arena_release(a);
 
     /* == LOOP ==================================================================*/
     while(!GAME_RUNNING)
@@ -65,6 +36,8 @@ int main() {
 
         EndDrawing();
     }
+
+    printf("Allocs: %i \n", get_allocation_count());
 
     CloseWindow();
 
