@@ -15,6 +15,7 @@ int main() {
     InitWindow(WIDTH, HEIGHT, TITLE);
     SetTargetFPS(60);
     SetExitKey(KEY_Q);
+    SetExitKey(KEY_SPACE);
     SetTraceLogLevel(LOG_ALL);
 
     Arena* a = arena_init(100);
