@@ -13,6 +13,7 @@ int main() {
 
     /* == RAYLIB INIT ============================================================*/ 
     InitWindow(WIDTH, HEIGHT, TITLE);
+    SetConfigFlags(FLAG_VSYNC_HINT);
     SetTargetFPS(60);
     SetExitKey(KEY_Q);
     SetExitKey(KEY_SPACE);
