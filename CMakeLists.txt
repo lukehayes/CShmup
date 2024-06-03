@@ -34,5 +34,5 @@ target_link_libraries(${BIN_NAME} raylib)
 
 # Build the CGame library.
 # 
-# target_link_libraries(${BIN_NAME} ECSLIB)
+target_link_libraries(${BIN_NAME} CGameLib)
 
