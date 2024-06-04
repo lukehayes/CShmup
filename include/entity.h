@@ -10,9 +10,7 @@ typedef struct Entity
     Vector2 position;
     Vector2 size;
     Color color;
-    int dx;
-    int dy;
-    int speed;
+    Movement* movement;
     char type[30];
 
 } Entity;
@@ -37,7 +35,6 @@ Entity entity_create(float x, float y, const char* type)
         .dx       = 1,
         .dy       = 1,
         .speed    = GetRandomValue(80,300),
-        .type     = { *strncpy(e.type, type, strlen(type) + 1) }
     };
 
     return e;
