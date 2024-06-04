@@ -32,10 +32,12 @@ Entity entity_create(float x, float y, const char* type)
         .position = {x,y}, 
         .size     = {10,10}, 
         .color    = LIGHTGRAY,
+        .type     = { *strncpy(e.type, type, strlen(type) + 1) },
+
         .dx       = 1,
         .dy       = 1,
         .speed    = GetRandomValue(80,300),
-        .type     = *strncpy(e.type, type, strlen(type) + 1)
+        .type     = { *strncpy(e.type, type, strlen(type) + 1) }
     };
 
     return e;
