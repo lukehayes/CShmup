@@ -7,7 +7,8 @@ set(CMAKE_C_STANDARD 23)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(INCLUDE_DIRS "include")
 set(BIN_NAME "CGame")
-
+set(CMAKE_C_FLAGS  "-Wall -fno-strict-aliasing")
+ 
 # Add debugging option.
 #
 option(DEV_DEBUG "Enter debug mode" 0)
