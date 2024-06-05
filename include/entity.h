@@ -8,8 +8,7 @@
 
 typedef struct Entity
 {
-    Vector2 position;
-    Vector2 size;
+    Rectangle rect;
     Color color;
     Movement movement;
     char type[30];
@@ -28,8 +27,7 @@ typedef struct Entity
 Entity entity_create(float x, float y, const char* type)
 {
     Entity e = { 
-        .position = {x,y}, 
-        .size     = {10,10}, 
+        .rect = {.x = x, .y = y, .width = 10, .height = 10},
         .color    = LIGHTGRAY,
         .type     = { *strncpy(e.type, type, strlen(type) + 1) },
         .movement = movement_create_basic()
@@ -49,17 +47,17 @@ Entity entity_create(float x, float y, const char* type)
 void entity_update(Entity* e, float dt)
 {
     // General Movement
-    e->position.x += e->movement.dx * e->movement.speed * dt;
-    e->position.y += e->movement.dy * e->movement.speed * dt;
+    e->rect.x += e->movement.dx * e->movement.speed * dt;
+    e->rect.y += e->movement.dy * e->movement.speed * dt;
 
 
     // Screen edge detection.
-    if(e->position.x < 2 || e->position.x > WINDOW_WIDTH - 5)
+    if(e->rect.x < 2 || e->rect.x > WINDOW_WIDTH - 5)
     {
         e->movement.dx = -e->movement.dx;
     }
 
-    if(e->position.y < 2 || e->position.y > WINDOW_HEIGHT - e->size.y)
+    if(e->rect.y < 2 || e->rect.y > WINDOW_HEIGHT - e->rect.width)
     {
         e->movement.dy = -e->movement.dy;
     }
@@ -75,7 +73,7 @@ void entity_update(Entity* e, float dt)
  */
 void entity_draw(const Entity e)
 {
-    DrawRectangle(e.position.x, e.position.y, e.size.x, e.size.y, e.color);
+    DrawRectangle(e.rect.x, e.rect.y, e.rect.width, e.rect.height, e.color);
 }
 
 #endif // !GM_ENTITY_H

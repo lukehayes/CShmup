@@ -1,13 +1,16 @@
 #include "raylib.h"
 #include "constants.h"
 #include "entity.h"
+#include "collision.h"
 
 bool GAME_RUNNING = false;
 
+
+#define POLYMORPHIC(e, var_name, cls) ((e)* (var_name) = ((e)*) &cls;)
+
 typedef struct Foo
 {
-    Vector2 position;
-    Vector2 size;
+    Rectangle rect;
     Color color;
     int dx;
     int dy;
@@ -29,8 +32,7 @@ int main() {
     Entity ents[ENT_COUNT];
 
     Foo foo = { 
-        .position = {300,300}, 
-        .size     = {100,100}, 
+        .rect = {.x = 300, .y = 200, .width = 30, .height = 10},
         .color    = PURPLE,
         .dx       = 1,
         .dy       = 1,
@@ -62,6 +64,18 @@ int main() {
             ClearBackground(DARKGRAY);
 
             DrawRectangle(10,10,100,100, BLACK);
+
+            
+            if(IsKeyDown(KEY_E))
+            {
+                Entity* rand_ent = &ents[GetRandomValue(0, ENT_COUNT - 1)];
+                rand_ent->movement = movement_create_fastest();
+            }
+
+
+            do_collisions(*(&ents));
+
+
 
             for(int i = 0; i <= ENT_COUNT - 1; i++)
             {
