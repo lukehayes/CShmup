@@ -3,6 +3,7 @@
 
 #include "raylib.h"
 #include "constants.h"
+#include "movement.h"
 #include <string.h>
 
 typedef struct Entity
@@ -10,7 +11,7 @@ typedef struct Entity
     Vector2 position;
     Vector2 size;
     Color color;
-    Movement* movement;
+    Movement movement;
     char type[30];
 
 } Entity;
@@ -31,10 +32,7 @@ Entity entity_create(float x, float y, const char* type)
         .size     = {10,10}, 
         .color    = LIGHTGRAY,
         .type     = { *strncpy(e.type, type, strlen(type) + 1) },
-
-        .dx       = 1,
-        .dy       = 1,
-        .speed    = GetRandomValue(80,300),
+        .movement = movement_create_basic()
     };
 
     return e;
@@ -51,19 +49,19 @@ Entity entity_create(float x, float y, const char* type)
 void entity_update(Entity* e, float dt)
 {
     // General Movement
-    e->position.x += e->dx * e->speed * dt;
-    e->position.y += e->dy * e->speed * dt;
+    e->position.x += e->movement.dx * e->movement.speed * dt;
+    e->position.y += e->movement.dy * e->movement.speed * dt;
 
 
     // Screen edge detection.
     if(e->position.x < 2 || e->position.x > WINDOW_WIDTH - 5)
     {
-        e->dx = -e->dx;
+        e->movement.dx = -e->movement.dx;
     }
 
     if(e->position.y < 2 || e->position.y > WINDOW_HEIGHT - e->size.y)
     {
-        e->dy = -e->dy;
+        e->movement.dy = -e->movement.dy;
     }
 
 }
