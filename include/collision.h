@@ -3,9 +3,8 @@
 
 #include "entity.h"
 
-void do_collisions(Entity** entities)
+void do_collisions(Entity* entities)
 {
-
     for(int i = 0; i <= ENT_COUNT - 1; i++)
     {
         Entity* current_entity = &entities[i];
