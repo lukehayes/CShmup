@@ -2,6 +2,7 @@
 #define GM_COLLISION_H
 
 #include "entity.h"
+#include <stdio.h>
 
 void do_collisions(Entity* entities)
 {
@@ -20,7 +21,16 @@ void do_collisions(Entity* entities)
                     current_entity->movement.dx = -current_entity->movement.dx;
                     /*other_entity->movement.dy = -other_entity->movement.dy;*/
 
-                    other_entity->color = RED;
+                    Color colors[]= {RED, GREEN, BLUE};
+
+                    printf("Other Collision E %i P %p \n", i, other_entity);
+                    printf(".... \n");
+                    printf("Curr Collision E %i P %p \n", i, current_entity);
+                    printf("-------------------------------- \n");
+
+
+
+                    other_entity->color = colors[GetRandomValue(0,2)];
                 }
             }
         }
