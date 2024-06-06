@@ -28,8 +28,6 @@ void do_collisions(Entity* entities)
                     printf("Curr Collision E %i P %p \n", i, current_entity);
                     printf("-------------------------------- \n");
 
-
-
                     other_entity->color = colors[GetRandomValue(0,2)];
                 }
             }

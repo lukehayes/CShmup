@@ -2,6 +2,8 @@
 #include "constants.h"
 #include "entity.h"
 #include "collision.h"
+#include "quadtree.h"
+#include "math.h"
 
 bool GAME_RUNNING = false;
 
@@ -31,18 +33,6 @@ int main() {
 
     Entity ents[ENT_COUNT];
 
-    Foo foo = { 
-        .rect = {.x = 300, .y = 200, .width = 30, .height = 10},
-        .color    = PURPLE,
-        .dx       = 1,
-        .dy       = 1,
-        .speed    = GetRandomValue(80,300),
-        /*.type     = *strncpy(f.type, "foo", strlen("foo") + 1)*/
-    };
-
-    /*Foo* f = &foo;*/
-    Entity* f = (Entity*) &foo;
-
     for(int i = 0; i <= ENT_COUNT - 1; i++)
     {
         int rx = GetRandomValue(10,WINDOW_WIDTH);
@@ -51,8 +41,13 @@ int main() {
         ents[i] = e;
     }
 
-    Entity e1 = entity_create(100,100, "Entity");
-    Entity e2 = entity_create(400,100, "Entity");
+    QuadTree* qt = quadtree_create((Rectangle){0, 0, WINDOW_WIDTH, WINDOW_HEIGHT});
+
+    quadtree_destroy(qt);
+
+    Rectangle a = {200,200,100,100};
+    Rectangle b = {400,400,30,30};
+
 
     /* == LOOP ==================================================================*/
     while(!GAME_RUNNING)
@@ -61,36 +56,52 @@ int main() {
 
         BeginDrawing();
 
-            ClearBackground(DARKGRAY);
+            ClearBackground(BLACK);
 
-            DrawRectangle(10,10,100,100, BLACK);
+            DrawRectangle(10,10,100,100, PURPLE);
 
-            
+            float mx = GetMouseX();
+            float my = GetMouseY();
+
+            b.x = mx;
+            b.y = my;
+
             if(IsKeyDown(KEY_E))
             {
                 Entity* rand_ent = &ents[GetRandomValue(0, ENT_COUNT - 1)];
                 rand_ent->movement = movement_create_fastest();
             }
 
-
-            do_collisions(*(&ents));
-
-
-
-            for(int i = 0; i <= ENT_COUNT - 1; i++)
+            if(rect_inside(a,b))
             {
-                entity_update(&ents[i], GetFrameTime());
+                printf("INSIDE \n");
+
+                Rectangle* aa = &a; 
+
+                aa->x = GetRandomValue(10,400);
+                aa->y = GetRandomValue(10,400);
             }
 
-            for(int i = 0; i <= ENT_COUNT - 1; i++)
+            if(rect_overlap(a,b))
             {
-                Entity e = ents[i];
-                entity_draw(e);
+                printf("OVERLAP \n");
             }
 
-            entity_draw(e1);
-            entity_draw(e2);
-            entity_draw(*f);
+            DrawRectangle(a.x, a.y, a.width, a.height, DARKGRAY);
+            DrawRectangle(b.x, b.y, b.width, b.height, GREEN);
+
+            /*do_collisions(*(&ents));*/
+
+            /*for(int i = 0; i <= ENT_COUNT - 1; i++)*/
+            /*{*/
+                /*entity_update(&ents[i], GetFrameTime());*/
+            /*}*/
+
+            /*for(int i = 0; i <= ENT_COUNT - 1; i++)*/
+            /*{*/
+                /*Entity e = ents[i];*/
+                /*entity_draw(e);*/
+            /*}*/
 
         EndDrawing();
     }
