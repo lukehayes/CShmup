@@ -9,7 +9,7 @@
 
 typedef struct 
 {
-    Rectangle points[4];
+    Rectangle* points[4];
     Rectangle boundary;
     size_t    capacity;
     bool      divided;
