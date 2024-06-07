@@ -36,6 +36,11 @@ QuadTree* quadtree_create(Rectangle boundary)
     tree->capacity = 4;
     tree->divided  = false;
 
+    for(int i = 0; i<= tree->capacity - 1; i++)
+    {
+        tree->points[i] = NULL;
+    }
+
     tree->nw = NULL;
     tree->ne = NULL;
     tree->sw = NULL;
