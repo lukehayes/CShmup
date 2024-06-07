@@ -4,12 +4,11 @@
 #include "collision.h"
 #include "quadtree.h"
 #include "math.h"
-
-bool GAME_RUNNING = false;
-
+#include "array.h"
 
 #define POLYMORPHIC(e, var_name, cls) ((e)* (var_name) = ((e)*) &cls;)
 
+bool GAME_RUNNING = false;
 
 int main() {
 
@@ -32,6 +31,23 @@ int main() {
     }
 
     QuadTree* qt = quadtree_create((Rectangle){0, 0, WINDOW_WIDTH, WINDOW_HEIGHT});
+
+
+    quadtree_insert(qt, (Rectangle){10,10,100,100});
+    quadtree_insert(qt, (Rectangle){-100,2200,100,100});
+    quadtree_insert(qt, (Rectangle){100,100,100,100});
+
+    
+    int arr[100];
+    printf("-------------- \n");
+    printf("SIZE: %lu \n", ARRAY_SIZE(arr));
+
+    Entity e1[3];
+
+
+    printf("FULL? %i \n", array_full_entity(ents, ENT_COUNT));
+    printf("FULL? %i \n", array_full_entity(e1, 3));
+
 
     quadtree_destroy(qt);
 
