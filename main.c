@@ -10,16 +10,6 @@ bool GAME_RUNNING = false;
 
 #define POLYMORPHIC(e, var_name, cls) ((e)* (var_name) = ((e)*) &cls;)
 
-typedef struct Foo
-{
-    Rectangle rect;
-    Color color;
-    int dx;
-    int dy;
-    int speed;
-    char type[30];
-
-} Foo;
 
 int main() {
 
