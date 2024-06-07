@@ -3,7 +3,7 @@
 
 #include "raylib.h"
 
-typedef struct
+typedef struct Movement
 {
     int dx;
     int dy;

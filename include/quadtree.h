@@ -7,7 +7,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-typedef struct 
+typedef struct  QuadTree
 {
     Rectangle* points[4];
     Rectangle boundary;
