@@ -72,6 +72,26 @@ void quadtree_subdivide(QuadTree* qt)
     qt->sw = quadtree_create(sw);
 }
 
+void quadtree_draw(QuadTree* qt)
+{
+    if(!qt) return;
+
+    DrawRectangleLines(
+	qt->boundary.x,
+	qt->boundary.y,
+	qt->boundary.width,
+	qt->boundary.height,
+	WHITE
+    );
+
+
+    quadtree_draw(qt->ne);
+    quadtree_draw(qt->nw);
+    quadtree_draw(qt->se);
+    quadtree_draw(qt->sw);
+
+}
+
 void quadtree_destroy(QuadTree* qt)
 {
     if (qt->nw) 

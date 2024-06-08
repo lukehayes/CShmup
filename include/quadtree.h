@@ -3,10 +3,7 @@
 
 #include "raylib.h"
 #include <stddef.h>
-#include <stdlib.h>
-#include <stdio.h>
 #include <stdbool.h>
-#include "math.h"
 
 typedef struct  QuadTree
 {
@@ -59,6 +56,9 @@ void quadtree_subdivide(QuadTree* qt);
 * @param QuadTree* tree
 */
 void quadtree_destroy(QuadTree* qt);
+
+void quadtree_draw(QuadTree* qt);
+
 
 
 
