@@ -4,7 +4,6 @@
 #include "collision.h"
 #include "quadtree.h"
 #include "math.h"
-#include "array.h"
 
 #define POLYMORPHIC(e, var_name, cls) ((e)* (var_name) = ((e)*) &cls;)
 
@@ -20,39 +19,29 @@ int main() {
     SetExitKey(KEY_SPACE);
     SetTraceLogLevel(LOG_ALL);
 
-    Entity ents[ENT_COUNT];
 
-    for(int i = 0; i <= ENT_COUNT - 1; i++)
-    {
-        int rx = GetRandomValue(10,WINDOW_WIDTH);
-        int ry = GetRandomValue(10,WINDOW_HEIGHT);
-        Entity e = entity_create(rx,ry, "Entity");
-        ents[i] = e;
-    }
+    /*for(int i = 0; i <= ENT_COUNT - 1; i++)*/
+    /*{*/
+        /*int rx = GetRandomValue(10,WINDOW_WIDTH);*/
+        /*int ry = GetRandomValue(10,WINDOW_HEIGHT);*/
+        /*Entity e = entity_create(rx,ry, "Entity");*/
+        /*ents[i] = e;*/
+    /*}*/
 
     QuadTree* qt = quadtree_create((Rectangle){0, 0, WINDOW_WIDTH, WINDOW_HEIGHT});
 
 
-    quadtree_insert(qt, (Rectangle){10,10,100,100});
-    quadtree_insert(qt, (Rectangle){-100,2200,100,100});
-    quadtree_insert(qt, (Rectangle){100,100,100,100});
+    Entity ents[ENT_COUNT];
 
-    
-    int arr[100];
-    printf("-------------- \n");
-    printf("SIZE: %lu \n", ARRAY_SIZE(arr));
+    for(int i = 0; i <= ENT_COUNT - 1; i++)
+    {
+        int rx = GetRandomValue(10,800);
+        int ry = GetRandomValue(10,600);
+        quadtree_insert(qt, (Rectangle){rx,ry,3,3});
 
-    Entity e1[3];
-
-
-    printf("FULL? %i \n", array_full_entity(ents, ENT_COUNT));
-    printf("FULL? %i \n", array_full_entity(e1, 3));
-
-
-    quadtree_destroy(qt);
-
-    Rectangle a = {200,200,100,100};
-    Rectangle b = {400,400,30,30};
+        Entity e = entity_create(rx,ry, "Entity");
+        ents[i] = e;
+    }
 
 
     /* == LOOP ==================================================================*/
@@ -66,35 +55,14 @@ int main() {
 
             DrawRectangle(10,10,100,100, PURPLE);
 
-            float mx = GetMouseX();
-            float my = GetMouseY();
-
-            b.x = mx;
-            b.y = my;
 
             if(IsKeyDown(KEY_E))
             {
-                Entity* rand_ent = &ents[GetRandomValue(0, ENT_COUNT - 1)];
+                Entity* rand_ent   = &ents[GetRandomValue(0, ENT_COUNT - 1)];
                 rand_ent->movement = movement_create_fastest();
             }
 
-            if(rect_inside(a,b))
-            {
-                printf("INSIDE \n");
-
-                Rectangle* aa = &a; 
-
-                aa->x = GetRandomValue(10,400);
-                aa->y = GetRandomValue(10,400);
-            }
-
-            if(rect_overlap(a,b))
-            {
-                printf("OVERLAP \n");
-            }
-
-            DrawRectangle(a.x, a.y, a.width, a.height, DARKGRAY);
-            DrawRectangle(b.x, b.y, b.width, b.height, GREEN);
+            quadtree_draw(qt);
 
             /*do_collisions(*(&ents));*/
 
@@ -103,14 +71,16 @@ int main() {
                 /*entity_update(&ents[i], GetFrameTime());*/
             /*}*/
 
-            /*for(int i = 0; i <= ENT_COUNT - 1; i++)*/
-            /*{*/
-                /*Entity e = ents[i];*/
-                /*entity_draw(e);*/
-            /*}*/
+            for(int i = 0; i <= ENT_COUNT - 1; i++)
+            {
+                Entity e = ents[i];
+                entity_draw(e);
+            }
 
         EndDrawing();
     }
+
+    quadtree_destroy(qt);
 
     CloseWindow();
 
