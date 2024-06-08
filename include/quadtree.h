@@ -6,12 +6,14 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
+#include "math.h"
 
 typedef struct  QuadTree
 {
     Rectangle* points[4];
     Rectangle boundary;
     size_t    capacity;
+    size_t    size;
     bool      divided;
 
     struct QuadTree* nw;
@@ -28,39 +30,27 @@ typedef struct  QuadTree
 *
 * @return QuadTree*
 */
-QuadTree* quadtree_create(Rectangle boundary)
-{
-    QuadTree* tree = malloc(sizeof(QuadTree));
+QuadTree* quadtree_create(Rectangle boundary);
 
-    tree->boundary = boundary;
-    tree->capacity = 4;
-    tree->divided  = false;
-
-    for(int i = 0; i<= tree->capacity - 1; i++)
-    {
-        tree->points[i] = NULL;
-    }
-
-    tree->nw = NULL;
-    tree->ne = NULL;
-    tree->sw = NULL;
-    tree->se = NULL;
-
-    return tree;
-}
 
 /** ---------------------------------------------------------------------------
-* Insert a new point into the QuadTree.
+* Insert a new point into the QuadTree. 
 *
 * @param QuadTree* qt       The Quadtree.
 * @param Rectangle point    The point to insert.
 *
 * @return void.
 */
-void quadtree_insert(QuadTree* qt, Rectangle point)
-{
+void quadtree_insert(QuadTree* qt, Rectangle point);
 
-}
+/** ---------------------------------------------------------------------------
+* Subdivide the Quadtree.
+*
+* @param QuadTree* qt       The Quadtree.
+*
+* @return void.
+*/
+void quadtree_subdivide(QuadTree* qt);
 
 
 /** ---------------------------------------------------------------------------
@@ -68,35 +58,7 @@ void quadtree_insert(QuadTree* qt, Rectangle point)
 *
 * @param QuadTree* tree
 */
-void quadtree_destroy(QuadTree* qt)
-{
-    if (qt->nw) 
-    {
-        free(qt->nw);
-        qt->nw = NULL;
-    }
-
-    if (qt->ne) 
-    {
-        free(qt->ne);
-        qt->ne = NULL;
-    }
-
-    if (qt->sw) 
-    {
-        free(qt->sw);
-        qt->sw = NULL;
-    }
-
-    if (qt->se) 
-    {
-        free(qt->se);
-        qt->se = NULL;
-    }
-
-    free(qt);
-    qt = NULL;
-}
+void quadtree_destroy(QuadTree* qt);
 
 
 
