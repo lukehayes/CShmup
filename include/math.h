@@ -14,10 +14,10 @@
 */
 bool rect_inside(Rectangle a, Rectangle b)
 {
-    return b.x > a.x &&
-           b.x + b.width < a.width + a.x &&
-           b.y > a.y &&
-           b.y + b.height < a.height + a.y;
+    return a.x > b.x &&
+           a.x + a.width < b.width + b.x &&
+           a.y > b.y &&
+           a.y + a.height < b.height + b.y;
 }
 
 /**
