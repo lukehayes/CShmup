@@ -48,7 +48,7 @@ void arena_release(Arena* arena)
  *
  * @return int
  */
-int get_allocation_count()
+int arena_get_allocation_count()
 {
 	return allocation_count;
 }
