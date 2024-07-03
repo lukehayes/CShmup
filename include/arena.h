@@ -30,6 +30,17 @@ Arena* arena_init(size_t capacity);
 void arena_release(Arena* arena);
 
 /**
+ * Insert some data into the memory arena
+ *
+ * @param Arena*  arena    A pointer to a memory arena.
+ * @param void*   data     The data to insert.
+ * @param size_t  size     The size of the data.
+ *
+ * @return size_t  size    Returns 0 if failiure, 1 otherwise.
+ */
+size_t arena_insert(Arena* arena, void* data, size_t size);
+
+/**
  * Get the current count of allocations.
  *
  * @return int
