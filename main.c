@@ -2,22 +2,12 @@
 #include "constants.h"
 #include "entity.h"
 #include "collision.h"
-
-bool GAME_RUNNING = false;
-
+#include "quadtree.h"
+#include "math.h"
 
 #define POLYMORPHIC(e, var_name, cls) ((e)* (var_name) = ((e)*) &cls;)
 
-typedef struct Foo
-{
-    Rectangle rect;
-    Color color;
-    int dx;
-    int dy;
-    int speed;
-    char type[30];
-
-} Foo;
+bool GAME_RUNNING = false;
 
 int main() {
 
@@ -29,30 +19,30 @@ int main() {
     SetExitKey(KEY_SPACE);
     SetTraceLogLevel(LOG_ALL);
 
+
+    /*for(int i = 0; i <= ENT_COUNT - 1; i++)*/
+    /*{*/
+        /*int rx = GetRandomValue(10,WINDOW_WIDTH);*/
+        /*int ry = GetRandomValue(10,WINDOW_HEIGHT);*/
+        /*Entity e = entity_create(rx,ry, "Entity");*/
+        /*ents[i] = e;*/
+    /*}*/
+
+    QuadTree* qt = quadtree_create((Rectangle){0, 0, WINDOW_WIDTH, WINDOW_HEIGHT});
+
+
     Entity ents[ENT_COUNT];
-
-    Foo foo = { 
-        .rect = {.x = 300, .y = 200, .width = 30, .height = 10},
-        .color    = PURPLE,
-        .dx       = 1,
-        .dy       = 1,
-        .speed    = GetRandomValue(80,300),
-        /*.type     = *strncpy(f.type, "foo", strlen("foo") + 1)*/
-    };
-
-    /*Foo* f = &foo;*/
-    Entity* f = (Entity*) &foo;
 
     for(int i = 0; i <= ENT_COUNT - 1; i++)
     {
-        int rx = GetRandomValue(10,WINDOW_WIDTH);
-        int ry = GetRandomValue(10,WINDOW_HEIGHT);
+        int rx = GetRandomValue(10,800);
+        int ry = GetRandomValue(10,600);
+        quadtree_insert(qt, (Rectangle){rx,ry,3,3});
+
         Entity e = entity_create(rx,ry, "Entity");
         ents[i] = e;
     }
 
-    Entity e1 = entity_create(100,100, "Entity");
-    Entity e2 = entity_create(400,100, "Entity");
 
     /* == LOOP ==================================================================*/
     while(!GAME_RUNNING)
@@ -61,26 +51,25 @@ int main() {
 
         BeginDrawing();
 
-            ClearBackground(DARKGRAY);
+            ClearBackground(BLACK);
 
-            DrawRectangle(10,10,100,100, BLACK);
+            DrawRectangle(10,10,100,100, PURPLE);
 
-            
+
             if(IsKeyDown(KEY_E))
             {
-                Entity* rand_ent = &ents[GetRandomValue(0, ENT_COUNT - 1)];
+                Entity* rand_ent   = &ents[GetRandomValue(0, ENT_COUNT - 1)];
                 rand_ent->movement = movement_create_fastest();
             }
 
+            quadtree_draw(qt);
 
-            do_collisions(*(&ents));
+            /*do_collisions(*(&ents));*/
 
-
-
-            for(int i = 0; i <= ENT_COUNT - 1; i++)
-            {
-                entity_update(&ents[i], GetFrameTime());
-            }
+            /*for(int i = 0; i <= ENT_COUNT - 1; i++)*/
+            /*{*/
+                /*entity_update(&ents[i], GetFrameTime());*/
+            /*}*/
 
             for(int i = 0; i <= ENT_COUNT - 1; i++)
             {
@@ -88,12 +77,10 @@ int main() {
                 entity_draw(e);
             }
 
-            entity_draw(e1);
-            entity_draw(e2);
-            entity_draw(*f);
-
         EndDrawing();
     }
+
+    quadtree_destroy(qt);
 
     CloseWindow();
 

@@ -3,7 +3,7 @@
 
 #include <stddef.h>
 
-typedef struct {
+typedef struct Arena {
     size_t size;
     size_t capacity;
     size_t position;
