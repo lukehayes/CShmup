@@ -2,6 +2,11 @@
 #include <stdlib.h>
 #include <stddef.h>
 
+#ifdef DEV_DEBUG
+#include <stdio.h>
+#else
+#endif /* Inlcude printf for debugging. */
+
 // Used for tracking. If 0 at end of program, all memory has been relased.
 // If the number is above 0 then there is a memory leak.
 static int allocation_count = 0;
@@ -39,8 +44,14 @@ void arena_release(Arena* arena)
     free(arena->data);
 	allocation_count -= 1;
 
+    #ifdef DEV_DEBUG
+	printf("Arena data released. \n");
+    #endif /* ifdef DEV_DEBUG */
     free(arena);
 	allocation_count -= 1;
+    #ifdef DEV_DEBUG
+	printf("Arena released. \n");
+    #endif /* ifdef DEV_DEBUG */
 }
 
 /**
