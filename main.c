@@ -1,13 +1,19 @@
 #include "raylib.h"
 #include "constants.h"
 #include "entity.h"
-#include "collision.h"
-#include "quadtree.h"
-#include "math.h"
+#include "arena.h"
+
+#include <stdio.h>
 
 #define POLYMORPHIC(e, var_name, cls) ((e)* (var_name) = ((e)*) &cls;)
 
 bool GAME_RUNNING = false;
+
+typedef struct Foo 
+{
+    const char* name;
+    size_t value;
+} Foo;
 
 int main() {
 
@@ -19,29 +25,25 @@ int main() {
     SetExitKey(KEY_SPACE);
     SetTraceLogLevel(LOG_ALL);
 
-
-    /*for(int i = 0; i <= ENT_COUNT - 1; i++)*/
-    /*{*/
-        /*int rx = GetRandomValue(10,WINDOW_WIDTH);*/
-        /*int ry = GetRandomValue(10,WINDOW_HEIGHT);*/
-        /*Entity e = entity_create(rx,ry, "Entity");*/
-        /*ents[i] = e;*/
-    /*}*/
-
-    QuadTree* qt = quadtree_create((Rectangle){0, 0, WINDOW_WIDTH, WINDOW_HEIGHT});
-
-
     Entity ents[ENT_COUNT];
 
-    for(int i = 0; i <= ENT_COUNT - 1; i++)
-    {
-        int rx = GetRandomValue(10,800);
-        int ry = GetRandomValue(10,600);
-        quadtree_insert(qt, (Rectangle){rx,ry,3,3});
+    Arena* arena = arena_init(100);
 
-        Entity e = entity_create(rx,ry, "Entity");
-        ents[i] = e;
-    }
+    int n = 111;
+    int m = 333;
+    Foo f1 = {.name = "F1", .value = 555};
+    Foo f2 = {.name = "F2", .value = 777};
+
+    size_t n_pos = arena_insert(arena, &n, sizeof(n));
+    size_t m_pos = arena_insert(arena, &m, sizeof(m));
+    arena_insert(arena, &f1, sizeof(f1));
+    arena_insert(arena, &f2, sizeof(f2));
+
+    printf("Position: %lu, Value: %lu \n\n", n_pos, *(size_t*)arena->data + n_pos);
+    printf("Position: %lu, Value: %lu \n\n", m_pos, *(size_t*)arena->data + m_pos);
+    printf("TEST: %lu \n", *(int*)arena->data);
+
+    arena_release(arena);
 
 
     /* == LOOP ==================================================================*/
@@ -50,37 +52,9 @@ int main() {
         if (IsKeyPressed(KEY_ESCAPE) || WindowShouldClose()) GAME_RUNNING = true;
 
         BeginDrawing();
-
             ClearBackground(BLACK);
-
-            DrawRectangle(10,10,100,100, PURPLE);
-
-
-            if(IsKeyDown(KEY_E))
-            {
-                Entity* rand_ent   = &ents[GetRandomValue(0, ENT_COUNT - 1)];
-                rand_ent->movement = movement_create_fastest();
-            }
-
-            quadtree_draw(qt);
-
-            /*do_collisions(*(&ents));*/
-
-            /*for(int i = 0; i <= ENT_COUNT - 1; i++)*/
-            /*{*/
-                /*entity_update(&ents[i], GetFrameTime());*/
-            /*}*/
-
-            for(int i = 0; i <= ENT_COUNT - 1; i++)
-            {
-                Entity e = ents[i];
-                entity_draw(e);
-            }
-
         EndDrawing();
     }
-
-    quadtree_destroy(qt);
 
     CloseWindow();
 

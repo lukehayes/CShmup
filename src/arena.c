@@ -68,6 +68,9 @@ size_t arena_insert(Arena* arena, void* data, size_t size)
 	to fit any more data into it.
     **/
     if (size > arena->capacity) {
+	#ifdef DEV_DEBUG
+	    printf("Not enough space \n");
+	#endif /* ifdef DEV_DEBUG */
 	return 0;
     }
 
