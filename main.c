@@ -6,8 +6,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define POLYMORPHIC(e, var_name, cls) ((e)* (var_name) = ((e)*) &cls;)
-
 bool GAME_RUNNING = false;
 
 typedef struct Foo 
