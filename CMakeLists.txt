@@ -16,7 +16,7 @@ if (DEV_DEBUG)
   add_definitions(-DDEV_DEBUG)
 endif()
 
-find_package(raylib 4 REQUIRED)
+find_package(raylib 5 REQUIRED)
 
 # Set the project include directories.
 # 
