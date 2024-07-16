@@ -82,9 +82,8 @@ size_t arena_insert(Arena* arena, void* data, size_t size)
 
     #ifdef DEV_DEBUG
 	printf("Inserted %lu bytes\n", size);
+	printf("Size: %lu. Position: %lu \n\n", arena->size, arena->position);
     #endif /* ifdef DEV_DEBUG */
-
-    printf("Size: %lu. Position: %lu \n\n", arena->size, arena->position);
 
     return old_position;
 }
