@@ -1,5 +1,5 @@
-#ifndef GM_MATH_H
-#define GM_MATH_H
+#ifndef GM_GAME_MATH_H
+#define GM_GAME_MATH_H
 
 #include "raylib.h"
 #include <stdbool.h>
@@ -36,4 +36,4 @@ bool rect_overlap(Rectangle a, Rectangle b)
            b.y < a.y + a.height;
 }
 
-#endif // GM_MATH_H
+#endif // GM_GAME_MATH_H
