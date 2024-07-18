@@ -30,4 +30,11 @@ Player* PlayerCreate(int x, int y, GameManager* game)
     return player;
 }
 
+void PlayerDestroy(Player* player)
+{
+    free(player);
+}
+
+
+
 #endif // !GM_PLAYER_H
