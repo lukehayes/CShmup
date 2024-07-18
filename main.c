@@ -2,6 +2,7 @@
 #include "constants.h"
 #include "game_manager.h"
 #include "levels.h"
+#include "player.h"
 
 bool GAME_RUNNING = false;
 
@@ -17,6 +18,7 @@ int main() {
     SetTraceLogLevel(LOG_ALL);
 
     GameManager* game = GameManagerCreate();
+    Player* player = PlayerCreate(100,100, game);
 
     /* == LOOP ==================================================================*/
     while(!GAME_RUNNING)
@@ -45,7 +47,16 @@ int main() {
             
             case GAMESTATE_PLAYING:
 
-                LevelPlay(game);
+                BeginDrawing();
+                    DrawRectangle(
+                        player->transform.position.x,
+                        player->transform.position.y,
+                        player->transform.scale.x,
+                        player->transform.scale.x,
+                        player->color);
+                EndDrawing();
+
+                /*LevelPlay(game);*/
                 break;
 
             case GAMESTATE_PAUSED:
@@ -57,6 +68,7 @@ int main() {
     }
 
     GameManagerDestroy(game);
+    PlayerDestroy(player);
 
     CloseWindow();
 
