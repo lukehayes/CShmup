@@ -8,7 +8,7 @@ void LevelStartMenu(GameManager* game)
 {
     BeginDrawing();
         ClearBackground(BLACK);
-        DrawText("Start Menu", 10,10, 16, WHITE);
+        DrawText("Start Menu", game->width, 100, 22, WHITE);
     EndDrawing();
 }
 
@@ -19,7 +19,7 @@ void LevelPlay(GameManager* game)
 
     BeginDrawing();
         ClearBackground(BLACK);
-        DrawText("Play State", 10,10, 16, WHITE);
+        DrawText("PlayState", game->width, 100, 22, WHITE);
         DrawRectangle(rx,ry, game->tileSize, game->tileSize, ORANGE);
     EndDrawing();
 
@@ -29,7 +29,7 @@ void LevelPaused(GameManager* game)
 {
     BeginDrawing();
         ClearBackground(BLACK);
-        DrawText("Paused State", 10,10, 16, WHITE);
+        DrawText("Paused State", game->width, 100, 22, WHITE);
     EndDrawing();
 }
 
