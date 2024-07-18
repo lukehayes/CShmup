@@ -10,6 +10,7 @@ typedef struct GameManager
 
     // System Specifc Settings
     size_t    tileSize;
+    size_t    tileScale;
     float     deltaTime;
 
     // Game Specifc Settings
@@ -24,13 +25,13 @@ GameManager* GameManagerCreate()
     GameManager* manager = malloc(sizeof(GameManager));
 
     manager->tileSize  = 8;
+    manager->tileScale = 2;
     manager->deltaTime = 0.0;
 
     manager->gameState = GAMESTATE_START_MENU;
     manager->lives     = 3;
     manager->level     = 1;
     manager->highscore = 0;
-
 
     return manager;
 };
