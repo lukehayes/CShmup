@@ -1,8 +1,7 @@
 #include "raylib.h"
 #include "constants.h"
-#include "entity.h"
 #include "game_manager.h"
-#include <stdio.h>
+#include "levels.h"
 
 bool GAME_RUNNING = false;
 
@@ -22,6 +21,9 @@ int main() {
     /* == LOOP ==================================================================*/
     while(!GAME_RUNNING)
     {
+        game->deltaTime = GetFrameTime();
+
+
         if (IsKeyPressed(KEY_ESCAPE) || WindowShouldClose()) GAME_RUNNING = true;
 
         if(IsKeyPressed(KEY_X))
@@ -37,29 +39,18 @@ int main() {
         switch (game->gameState) {
 
             case GAMESTATE_START_MENU:
-                printf("Start Menu \n");
 
-                BeginDrawing();
-                    ClearBackground(BLACK);
-                    DrawRectangle(100,100,100,100, RED);
-                EndDrawing();
-
+                LevelStartMenu(game);
                 break;
             
             case GAMESTATE_PLAYING:
-                printf("Playing\n");
-                BeginDrawing();
-                    ClearBackground(BLACK);
-                    DrawRectangle(100,300,100,100, GREEN);
-                EndDrawing();
+
+                LevelPlay(game);
                 break;
 
             case GAMESTATE_PAUSED:
-                printf("Paused\n");
-                BeginDrawing();
-                    ClearBackground(BLACK);
-                    DrawRectangle(300,100,100,100, BLUE);
-                EndDrawing();
+
+                LevelPaused(game);
                 break;
         }
 
