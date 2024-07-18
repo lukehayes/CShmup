@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
-#include "math.h"
+#include "game_math.h"
 
 QuadTree* quadtree_create(Rectangle boundary)
 {
