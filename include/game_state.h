@@ -6,7 +6,6 @@ typedef enum GameState
     GAMESTATE_START_MENU,
     GAMESTATE_PAUSED,
     GAMESTATE_PLAYING,
-    GAMESTATE_COUNT
 
 } GameState;
 
