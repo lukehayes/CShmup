@@ -18,7 +18,7 @@ int main() {
     SetTraceLogLevel(LOG_ALL);
 
     GameManager* game = GameManagerCreate();
-    Player* player = PlayerCreate(100,100, game);
+    Player* player = PlayerCreate(100,300, game);
 
     /* == LOOP ==================================================================*/
     while(!GAME_RUNNING)
@@ -38,6 +38,11 @@ int main() {
             game->gameState = GAMESTATE_PAUSED;
         }
 
+        if(IsKeyPressed(KEY_Q))
+        {
+            game->gameState = GAMESTATE_START_MENU;
+        }
+
         switch (game->gameState) {
 
             case GAMESTATE_START_MENU:
@@ -47,13 +52,16 @@ int main() {
             
             case GAMESTATE_PLAYING:
 
+                PlayerUpdate(player, game);
+
                 BeginDrawing();
+                    ClearBackground(BLACK);
                     DrawRectangle(
                         player->transform.position.x,
                         player->transform.position.y,
                         player->transform.scale.x,
                         player->transform.scale.x,
-                        player->color);
+                        PINK);
                 EndDrawing();
 
                 /*LevelPlay(game);*/
