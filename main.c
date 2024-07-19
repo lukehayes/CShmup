@@ -54,14 +54,16 @@ int main() {
 
                 PlayerUpdate(player, game);
 
+
                 BeginDrawing();
                     ClearBackground(BLACK);
+                    DrawText("PlayState", 10, 10, 22, WHITE);
                     DrawRectangle(
                         player->transform.position.x,
                         player->transform.position.y,
                         player->transform.scale.x,
                         player->transform.scale.x,
-                        PINK);
+                        WHITE);
                 EndDrawing();
 
                 /*LevelPlay(game);*/
