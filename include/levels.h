@@ -3,13 +3,15 @@
 
 #include "raylib.h"
 #include "game_manager.h"
+#include "renderer.h"
+#include <stdio.h>
 
 void LevelStartMenu(GameManager* game)
 {
     BeginDrawing();
         ClearBackground(BLACK);
-        DrawText("Start Menu", 10, 10, 22, WHITE);
-        DrawText("Press X to start...", 10, 50, 16, WHITE);
+        DrawTextEx(game->font, "!*?;@~# ABCDE abcde 12345", (Vector2){10,10}, game->font_size * game->font_mult, 0, WHITE);
+        // DrawText("Press X to start...", 10, 50, 16, WHITE);
     EndDrawing();
 }
 
