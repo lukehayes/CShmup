@@ -3,6 +3,7 @@
 
 #include "game_state.h"
 #include <stdlib.h>
+#include "raylib.h"
 
 typedef struct GameManager
 {
@@ -14,6 +15,11 @@ typedef struct GameManager
     size_t    tileSize;
     size_t    tileScale;
     float     deltaTime;
+
+    // Font
+    Font      font;
+    size_t    font_size;
+    size_t    font_mult;
 
 
     // Game Specifc Settings
