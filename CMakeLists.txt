@@ -55,5 +55,5 @@ add_library(${CGAME_LIB} STATIC
 # Link the libraries
 # 
 target_link_libraries(${BIN_NAME} raylib)
-target_link_libraries(${BIN_NAME} ${CGAME_LIB})
+target_link_libraries(${BIN_NAME} ${CGAME_LIB} m)
 
