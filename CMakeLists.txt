@@ -47,6 +47,7 @@ set(CGAME_LIB "Game")
 add_library(${CGAME_LIB} STATIC
   "${SRC_DIR}/arena.c"
   "${SRC_DIR}/quadtree.c"
+  "${SRC_DIR}/game_manager.c"
 )
 
 
