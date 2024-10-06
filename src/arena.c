@@ -9,8 +9,6 @@
 #endif /* Inlcude printf for debugging. */
 
 
-
-
 // Used for tracking. If 0 at end of program, all memory has been relased.
 // If the number is above 0 then there is a memory leak.
 static int allocation_count = 0;
@@ -30,9 +28,10 @@ Arena* arena_init(size_t capacity)
     allocation_count += 1;
 
     arena->size      = 0;
-    arena->capacity  = capacity;
+    arena->sizeBytes = sizeof(size_t) * arena->size;
+    arena->capacity  = sizeof(size_t) * capacity;
     arena->position  = 0;
-    arena->data      = malloc(sizeof(size_t) * capacity);
+    arena->data      = malloc(arena->capacity);
     allocation_count += 1;
 
     return arena;
@@ -53,7 +52,7 @@ void arena_release(Arena* arena)
     #endif /* ifdef DEV_DEBUG */
 
     free(arena);
-	allocation_count -= 1;
+    allocation_count -= 1;
 
     #ifdef DEV_DEBUG
 	printf("DEV: Arena released. \n");
@@ -62,27 +61,35 @@ void arena_release(Arena* arena)
 
 size_t arena_insert(Arena* arena, void* data, size_t size)
 {
-
     /**
 	If size is larger than capacity then dont try
 	to fit any more data into it.
     **/
-    if (size > arena->capacity) {
-	#ifdef DEV_DEBUG
-	    printf("Not enough space \n");
-	#endif /* ifdef DEV_DEBUG */
-	return 0;
+    if (arena->sizeBytes >= arena->capacity) {
+        #ifdef DEV_DEBUG
+            printf("Attempted Insert: %lu Bytes making capacity %lu. Actual Capacity %lu \n", size, size + arena->capacity ,arena->capacity);
+            printf("Arena Full. Capacity is %lu bytes\n", arena->capacity);
+        #endif /* ifdef DEV_DEBUG */
+        return false;
     }
+
+    size_t* tempData = malloc(size);
+    *tempData = (size_t)data;
 
     size_t old_position = arena->size;
     arena->size += size;
+    arena->sizeBytes += size;
     arena->position += size;
 
-    memcpy(arena->data, data, size);
+    printf("--------\n");
+    printf("Passed in size %lu\n", size);
+    memcpy(arena->data, tempData, size);
+
+    free(tempData);
 
     #ifdef DEV_DEBUG
-	printf("Inserted %lu bytes\n", size);
-	printf("Size: %lu. Position: %lu \n\n", arena->size, arena->position);
+        printf("Inserted %lu bytes\n", size);
+        printf("Size: %lu. Size Bytes:%lu ,Position: %lu \n\n", arena->size, arena->sizeBytes, arena->position);
     #endif /* ifdef DEV_DEBUG */
 
     return old_position;

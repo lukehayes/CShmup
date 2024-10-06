@@ -3,6 +3,8 @@
 #include "game_manager.h"
 #include "levels.h"
 #include "player.h"
+#include "arena.h"
+#include <stddef.h>
 
 bool GAME_RUNNING = false;
 
@@ -19,6 +21,26 @@ int main() {
 
     GameManager* game = GameManagerCreate();
     Player* player = PlayerCreate(100,300, game);
+
+    Arena* a = arena_init(2);
+
+    printf("Capacity: %lu \n", a->capacity);
+    printf("Size: %lu \n", a->size);
+    printf("Size in bytes: %lu \n", a->sizeBytes);
+
+    size_t pos = arena_insert(a, (size_t*)100, sizeof(size_t));
+
+    if(pos)
+    {
+        printf("Insertion Success \n");
+    } else {
+
+        printf("Insertion Failed \n");
+    }
+
+
+    arena_release(a);
+
 
     /* == LOOP ==================================================================*/
     while(!GAME_RUNNING)

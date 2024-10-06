@@ -5,6 +5,7 @@
 
 typedef struct Arena {
     size_t size;
+    size_t sizeBytes;
     size_t capacity;
     size_t position;
     void* data;
