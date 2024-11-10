@@ -11,7 +11,7 @@ bool GAME_RUNNING = false;
 
 int main() {
 
-    /* == RAYLIB INIT ============================================================*/ 
+    /* == RAYLIB INIT ========================================================*/
     SetConfigFlags(FLAG_VSYNC_HINT);
     InitWindow(WINDOW_WIDTH, WINDOW_HEIGHT, TITLE);
     SetTargetFPS(60);
@@ -19,30 +19,12 @@ int main() {
     SetExitKey(KEY_SPACE);
     SetTraceLogLevel(LOG_ALL);
 
+    /* == GAME INIT ==========================================================*/
     GameManager* game = GameManagerCreate();
     Player* player = PlayerCreate(100,300, game);
 
-    Arena* a = arena_init(2);
 
-    printf("Capacity: %lu \n", a->capacity);
-    printf("Size: %lu \n", a->size);
-    printf("Size in bytes: %lu \n", a->sizeBytes);
-
-    size_t pos = arena_insert(a, (size_t*)100, sizeof(size_t));
-
-    if(pos)
-    {
-        printf("Insertion Success \n");
-    } else {
-
-        printf("Insertion Failed \n");
-    }
-
-
-    arena_release(a);
-
-
-    /* == LOOP ==================================================================*/
+    /* == LOOP ===============================================================*/
     while(!GAME_RUNNING)
     {
         game->deltaTime = GetFrameTime();
@@ -71,7 +53,7 @@ int main() {
 
                 LevelStartMenu(game);
                 break;
-            
+
             case GAMESTATE_PLAYING:
 
                 PlayerUpdate(player, game);
@@ -84,7 +66,7 @@ int main() {
                         player->transform.position.x,
                         player->transform.position.y,
                         player->transform.scale.x,
-                        player->transform.scale.x,
+                        player->transform.scale.y,
                         WHITE);
                 EndDrawing();
 
