@@ -16,7 +16,7 @@ typedef struct Player
 
 Player* PlayerCreate(int x, int y, GameManager* game)
 {
-    Player* player = malloc(sizeof(Transform));
+    Player* player = malloc(sizeof(Player));
 
     player->transform.position.x = x;
     player->transform.position.y = y;
