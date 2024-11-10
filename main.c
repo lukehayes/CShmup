@@ -3,7 +3,6 @@
 #include "game_manager.h"
 #include "levels.h"
 #include "player.h"
-#include <stddef.h>
 
 bool GAME_RUNNING = false;
 
