@@ -24,15 +24,13 @@ void LevelStartMenu(GameManager* game)
 
 void LevelPlay(GameManager* game)
 {
-    double rx = GetRandomValue(10,160);
-    double ry = GetRandomValue(10,300);
-
     PlayerUpdate(game->player, game);
 
     BeginDrawing();
         ClearBackground(BLACK);
+
         DrawText("PlayState", 10, 10, 22, WHITE);
-        DrawRectangle(rx,ry, game->tileSize, game->tileSize, ORANGE);
+
         DrawRectangle(
             game->player->transform.position.x,
             game->player->transform.position.y,
