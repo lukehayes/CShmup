@@ -5,6 +5,8 @@
 #include <stdlib.h>
 #include "raylib.h"
 
+struct Player;
+
 typedef struct GameManager
 {
     GameState gameState;
@@ -26,6 +28,8 @@ typedef struct GameManager
     size_t    lives;
     size_t    highscore;
     size_t    level;
+
+    struct Player*   player;
 
 } GameManager;
 

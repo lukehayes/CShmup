@@ -3,7 +3,6 @@
 
 #include "raylib.h"
 #include "transform.h"
-#include "game_manager.h"
 #include <stdlib.h>
 
 typedef struct Player
