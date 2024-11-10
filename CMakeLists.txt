@@ -58,7 +58,7 @@ add_library(${CSYSTEM_LIB} STATIC
 # -----------------------------------------------------------------------------
 # Link the libraries
 # 
-target_link_libraries(${BIN_NAME} raylib)
+target_link_libraries(${BIN_NAME} raylib m)
 target_link_libraries(${BIN_NAME} ${CSYSTEM_LIB})
 target_link_libraries(${BIN_NAME} ${CGAME_LIB})
 
