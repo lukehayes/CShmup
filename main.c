@@ -3,7 +3,6 @@
 #include "game_manager.h"
 #include "levels.h"
 #include "player.h"
-#include "arena.h"
 #include <stddef.h>
 
 bool GAME_RUNNING = false;
@@ -22,6 +21,7 @@ int main() {
     /* == GAME INIT ==========================================================*/
     GameManager* game = GameManagerCreate();
     Player* player = PlayerCreate(100,300, game);
+    game->player = player;
 
 
     /* == LOOP ===============================================================*/
@@ -55,26 +55,11 @@ int main() {
                 break;
 
             case GAMESTATE_PLAYING:
-
-                PlayerUpdate(player, game);
-
-
-                BeginDrawing();
-                    ClearBackground(BLACK);
-                    DrawText("PlayState", 10, 10, 22, WHITE);
-                    DrawRectangle(
-                        player->transform.position.x,
-                        player->transform.position.y,
-                        player->transform.scale.x,
-                        player->transform.scale.y,
-                        WHITE);
-                EndDrawing();
-
-                /*LevelPlay(game);*/
+                /*PlayerUpdate(player, game);*/
+                LevelPlay(game);
                 break;
 
             case GAMESTATE_PAUSED:
-
                 LevelPaused(game);
                 break;
         }
