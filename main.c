@@ -3,6 +3,7 @@
 #include "game_manager.h"
 #include "levels.h"
 #include "player.h"
+#include "pickup.h"
 
 bool GAME_RUNNING = false;
 
@@ -22,6 +23,11 @@ int main() {
     Player* player = PlayerCreate(100,300, game);
     game->player = player;
 
+    Pickup p1 = PickupCreate(100.0,100.0, game);
+    Pickup p2 = PickupCreate(300.0,400.0, game);
+
+    printf("Pos %f %f\n", p1.transform.position.x, p1.transform.position.y);
+    printf("Scale %f %f\n", p1.transform.scale.x, p1.transform.scale.y);
 
     /* == LOOP ===============================================================*/
     while(!GAME_RUNNING)
@@ -55,6 +61,10 @@ int main() {
 
             case GAMESTATE_PLAYING:
                 LevelPlay(game);
+
+                PickupDraw(&p1, game);
+                PickupDraw(&p2, game);
+
                 break;
 
             case GAMESTATE_PAUSED:
