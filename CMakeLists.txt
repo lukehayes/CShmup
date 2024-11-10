@@ -45,15 +45,20 @@ add_executable(${BIN_NAME} main.c)
 set(CGAME_LIB "Game")
 
 add_library(${CGAME_LIB} STATIC
-  "${SRC_DIR}/arena.c"
-  "${SRC_DIR}/quadtree.c"
   "${SRC_DIR}/game_manager.c"
 )
 
+set(CSYSTEM_LIB "System")
+
+add_library(${CSYSTEM_LIB} STATIC
+  "${SRC_DIR}/arena.c"
+  "${SRC_DIR}/quadtree.c"
+)
 
 # -----------------------------------------------------------------------------
 # Link the libraries
 # 
 target_link_libraries(${BIN_NAME} raylib)
-target_link_libraries(${BIN_NAME} ${CGAME_LIB} m)
+target_link_libraries(${BIN_NAME} ${CSYSTEM_LIB})
+target_link_libraries(${BIN_NAME} ${CGAME_LIB})
 
