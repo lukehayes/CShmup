@@ -55,7 +55,6 @@ int main() {
                 break;
 
             case GAMESTATE_PLAYING:
-                /*PlayerUpdate(player, game);*/
                 LevelPlay(game);
                 break;
 
